@@ -652,21 +652,10 @@ function loadAds(){
     el.appendChild(s2);
   }
 
-  // 728x90 Desktop
+  // 728x90 Desktop Leaderboard
   loadBanner('ad728', '7e9627f51376c6e4560f12209f0e099f', 728, 90);
 
-  // Small delay between loads to avoid atOptions race
-  setTimeout(() => {
-    // 300x250
-    loadBanner('ad300', '2915cb11d1536351ed66f3d5f50d9c1d', 300, 250);
-  }, 300);
-
-  setTimeout(() => {
-    // 320x50 Mobile
-    loadBanner('ad320', 'e5feb0a10e872208b4ecaa296b076074', 320, 50);
-  }, 600);
-
-  // Native Banner (different format)
+  // Native Banner
   setTimeout(() => {
     const nativeEl = document.getElementById('adNative');
     if(!nativeEl) return;
@@ -679,7 +668,7 @@ function loadAds(){
     const div = document.createElement('div');
     div.id = 'container-0cd45fb864f5b70ccb28b69d91843ea3';
     nativeEl.appendChild(div);
-  }, 900);
+  }, 400);
 }
 
 /* ───────────── INIT ───────────── */
