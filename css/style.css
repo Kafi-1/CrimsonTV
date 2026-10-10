@@ -439,15 +439,16 @@ body{
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* ═══════════════════════════════════════════════════
-   Ad Slots
+   Ad Slots (thin strips)
 ═══════════════════════════════════════════════════ */
 .ad-slot{
   display:flex;
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  background:transparent;
+  background:var(--bg2);
   flex-shrink:0;
+  width:100%;
 }
 .ad-slot iframe{
   max-width:100%;
@@ -455,55 +456,47 @@ body{
   display:block;
 }
 
-/* Desktop Leaderboard 728x90 */
-.ad-leaderboard{
-  width:100%;
-  min-height:90px;
-  padding:6px 0;
-  background:var(--bg2);
-  border-bottom:1px solid var(--bdr);
-}
-.ad-desktop{display:flex}
-.ad-mobile{display:none}
-
-/* 300x250 Rectangle */
-.ad-rectangle{
-  width:100%;
-  min-height:250px;
-  padding:10px 0;
-  border-bottom:1px solid var(--bdr);
-}
-
-/* Native Banner */
-.ad-native{
-  width:100%;
-  min-height:60px;
-  padding:8px 12px;
-  border-bottom:1px solid var(--bdr);
-}
-
-/* Mobile 320x50 */
-.ad-mobile-banner{
-  width:100%;
-  min-height:50px;
+/* Top strip under header - 728x90 desktop, thinner on mobile */
+.ad-top-strip{
+  min-height:0;
+  max-height:90px;
   padding:4px 0;
-  background:var(--bg2);
-  border-top:1px solid var(--bdr);
+  border-bottom:1px solid var(--bdr);
+}
+.ad-top-strip:empty{display:none;padding:0;border:none;min-height:0}
+
+/* Mid strips - native, keep thin */
+.ad-mid-strip{
+  min-height:0;
+  max-height:100px;
+  padding:4px 8px;
+  border-bottom:1px solid var(--bdr);
+}
+.ad-mid-strip:empty{display:none;padding:0;border:none}
+
+/* Player controls - ensure always clickable */
+.pc-bar{
+  z-index:20 !important;
+  pointer-events:auto !important;
+}
+.pc-btn, .vol-slider, .big-play{
+  pointer-events:auto !important;
+  position:relative;
+  z-index:21;
+}
+.v-wrap .pc-bar{
+  opacity:1;
+}
+@media(hover:hover){
+  .v-wrap .pc-bar{opacity:0}
+  .v-wrap:hover .pc-bar,
+  .v-wrap.show-ctrl .pc-bar,
+  .v-wrap.is-paused .pc-bar{opacity:1}
 }
 
-/* Responsive Ad Visibility */
+/* Mobile: bottom nav always visible */
 @media(max-width:768px){
-  .ad-desktop{display:none !important}
-  .ad-mobile{display:flex !important}
-  .ad-rectangle{
-    min-height:auto;
-    padding:8px 0;
-  }
-  .ad-rectangle iframe{
-    max-width:300px;
-  }
-}
-@media(min-width:769px){
-  .ad-mobile{display:none !important}
-  .ad-desktop{display:flex !important}
+  .bottom-nav{display:flex !important}
+  .ad-top-strip{max-height:70px}
+  .ad-mid-strip{max-height:90px}
 }
