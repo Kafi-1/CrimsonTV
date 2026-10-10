@@ -652,23 +652,8 @@ function loadAds(){
     el.appendChild(s2);
   }
 
-  // 728x90 Desktop Leaderboard
+  // 728x90 Desktop Leaderboard only
   loadBanner('ad728', '7e9627f51376c6e4560f12209f0e099f', 728, 90);
-
-  // Native Banner
-  setTimeout(() => {
-    const nativeEl = document.getElementById('adNative');
-    if(!nativeEl) return;
-    nativeEl.innerHTML = '';
-    const s = document.createElement('script');
-    s.async = true;
-    s.setAttribute('data-cfasync', 'false');
-    s.src = 'https://pl31756762.profitableratecpmnetwork.com/0cd45fb864f5b70ccb28b69d91843ea3/invoke.js';
-    nativeEl.appendChild(s);
-    const div = document.createElement('div');
-    div.id = 'container-0cd45fb864f5b70ccb28b69d91843ea3';
-    nativeEl.appendChild(div);
-  }, 400);
 }
 
 /* ───────────── INIT ───────────── */
