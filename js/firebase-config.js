@@ -24,7 +24,10 @@ import {
   getDoc, 
   updateDoc,
   arrayUnion,
-  arrayRemove
+  arrayRemove,
+  addDoc,
+  collection,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 // ────────────────────────────────────────────────
@@ -60,5 +63,8 @@ export {
   getDoc,
   updateDoc,
   arrayUnion,
-  arrayRemove
+  arrayRemove,
+  addDoc,
+  collection,
+  serverTimestamp
 };
