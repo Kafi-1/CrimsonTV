@@ -1,144 +1,27 @@
-# CrimsonTV
+# CrimsonTV v2
 
-Modern, clean IPTV web app with enhanced player, mobile support and premium UI.
+ক্লিন ডার্ক UI-এর IPTV ওয়েব অ্যাপ — মোবাইল ও ডেস্কটপ দুটোতেই রেসপনসিভ।
+Developer: Abdullah Al Kafi — https://kafi.dev.bd
 
-Inspired by classic IPTV apps but rebuilt with better UX.
+## পেজ
+Live (Home) · Favorites · History · Search · Settings · Support · FAQ · Developer Info
 
----
+## প্লেয়ার
+- Quality selector (Auto/720p/480p…), Fit/Fill/Stretch, গিয়ার মেনু
+- Double-tap বাম/ডান = আগের/পরের চ্যানেল, মাঝে = fullscreen
+- Fullscreen + landscape lock + iOS fallback, PiP, Share, Wake Lock, Media Session
+- Auto-reconnect ও error recovery, buffering loader
+- শর্টকাট: Space/K, F, M, ← →, ↑ ↓
 
-## Features
+## বিজ্ঞাপন
+প্রতিটি বিজ্ঞাপন আলাদা iframe-এ লোড হয় (atOptions conflict নেই), 728x90 ব্যানার ছোট স্ক্রিনে অটো-স্কেল হয়।
+স্লট: Live পেজে ২টি (banner + native), Settings পেজে ১টি। কনফিগ: `js/app.js` → `ADS`
 
-### Core
-- Firebase Authentication (Email + Google)
-- Guest mode (skip login)
-- M3U playlist loader
-- HLS player (hls.js) with custom headers support
-- Category tabs + Search
-- Favorites (localStorage + Firestore sync)
-- Recently Watched
-- Remember last channel
-
-### Player
-- Fullscreen (Desktop + Mobile/iOS fallback)
-- Play / Pause with live icon update
-- Volume slider + Mute
-- Channel Previous / Next
-- Picture-in-Picture
-- Share channel
-- Keyboard shortcuts:
-  - `Space` / `K` → Play/Pause
-  - `F` → Fullscreen
-  - `M` → Mute
-  - `←` `→` → Previous / Next channel
-  - `↑` `↓` → Volume
-
-### UI / UX
-- Black · White · Red modern dark theme
-- Fully responsive (Desktop + Mobile)
-- Mobile bottom navigation (Home / Favorites / Recent / Search)
-- Touch-friendly favorite buttons
-- Smooth controls auto-hide
-- Big center play button when paused
-
-### PWA Ready
-- Web App Manifest included
-- Add to Home Screen support
-
----
-
-## Setup
-
-### 1. Firebase Config
-
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Create a project
-3. Enable **Authentication** → Email/Password + Google
-4. Create **Firestore** database
-5. Open `js/firebase-config.js`
-6. Paste your config
-
-### 2. Firestore Rules
-
+## সেটআপ
+1. `js/firebase-config.js` এ Firebase config বসান (Login/Favorites sync-এর জন্য; না দিলে guest mode কাজ করবে)
+2. `js/app.js` এর `M3U_URL` এ প্লেলিস্ট লিংক দিন
+3. Firestore rules-এ `users/{uid}` ছাড়াও Support ফর্মের জন্য চাইলে `support_messages` এ create allow করুন:
 ```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-  }
-}
+match /support_messages/{id} { allow create: if true; allow read: if false; }
 ```
-
-### 3. M3U Link
-
-Open `js/app.js` and change:
-
-```js
-const M3U_URL = 'YOUR_M3U_LINK_HERE';
-```
-
-### 4. Run
-
-```bash
-npx serve .
-# or
-python -m http.server 3000
-```
-
-> ES Modules + Firebase need a real server (`file://` will not work).
-
----
-
-## File Structure
-
-```
-crimson-tv/
-├── index.html
-├── manifest.json
-├── css/
-│   └── style.css
-├── js/
-│   ├── firebase-config.js
-│   ├── m3u-parser.js
-│   └── app.js
-└── README.md
-```
-
----
-
-## Notes
-
-- CORS: Some M3U servers block browser requests. You may need a proxy (Cloudflare Worker etc.).
-- Stream quality depends on the M3U source.
-- For Google Sign-In add your domain in Firebase authorized domains.
-
----
-
-## Changelog (from original Mehedi-TV)
-
-**Fixes**
-- Fullscreen now works (Desktop + iOS fallback)
-- Mobile bottom navigation fully functional
-- Play/Pause icon updates live
-- Favorite buttons visible on touch devices
-- Custom headers (User-Agent / Referer) applied to streams
-- Better error handling
-- Prevented double initApp calls
-
-**New Features**
-- Volume slider
-- Channel Prev / Next
-- Keyboard shortcuts
-- Remember last channel
-- Recently Watched
-- Picture-in-Picture
-- Share button
-- Mobile search overlay
-- Enhanced UI + new Black · White · Red theme
-- PWA manifest
-- Big center play button
-
----
-
-Made with ❤️ for better live TV experience.
+4. GitHub Pages / যেকোনো static host-এ আপলোড করুন (file:// এ চলবে না)।

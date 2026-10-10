@@ -1,170 +1,230 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#e11d48">
-  <meta name="description" content="CrimsonTV — Watch live TV channels free. Premium IPTV experience.">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="manifest" href="manifest.json">
-  <title>CrimsonTV — Live TV</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b12">
+<meta name="description" content="CrimsonTV — ফ্রি লাইভ টিভি দেখুন। ক্লিন, দ্রুত, মোবাইল ও ডেস্কটপ ফ্রেন্ডলি।">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<title>CrimsonTV — Live TV</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- AUTH OVERLAY -->
-  <div id="authOverlay">
-    <div class="auth-box">
-      <div class="auth-logo">
-        <div class="auth-logo-icon">C</div>
-        <h1>Crimson<span>TV</span></h1>
-        <p>Premium Live Television</p>
-      </div>
-      <div class="auth-tabs">
-        <button class="auth-tab active" data-tab="login">Sign In</button>
-        <button class="auth-tab" data-tab="register">Register</button>
-      </div>
-      <div class="auth-error" id="authError"></div>
-      <form id="loginForm">
-        <div class="auth-field">
-          <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email">
-        </div>
-        <div class="auth-field">
-          <label>Password</label>
-          <input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="auth-btn" id="loginBtn">Sign In</button>
-      </form>
-      <form id="registerForm" style="display:none">
-        <div class="auth-field">
-          <label>Name</label>
-          <input type="text" id="regName" placeholder="Your name" autocomplete="name">
-        </div>
-        <div class="auth-field">
-          <label>Email</label>
-          <input type="email" id="regEmail" placeholder="you@example.com" required autocomplete="email">
-        </div>
-        <div class="auth-field">
-          <label>Password</label>
-          <input type="password" id="regPass" placeholder="Min 6 characters" required autocomplete="new-password">
-        </div>
-        <button type="submit" class="auth-btn" id="regBtn">Create Account</button>
-      </form>
-      <div class="auth-divider">or</div>
-      <button class="google-btn" id="googleBtn">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.2 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.5-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.2 6.1 29.4 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 36 26.8 37 24 37c-5.3 0-9.7-3.3-11.3-8H6.3C9.6 39.7 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.2-3.5 5.7-6.5 7.1l6.2 5.2C38.5 36.8 44 31.2 44 24c0-1.3-.1-2.5-.4-3.5z"/></svg>
-        Continue with Google
-      </button>
-      <span class="skip-auth" id="skipAuth">Continue without login →</span>
+<!-- AUTH -->
+<div id="authOverlay" class="hidden">
+  <div class="auth-box">
+    <button class="auth-close" id="authClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="auth-logo">
+      <div class="logo-mark">C</div>
+      <h1>Crimson<span>TV</span></h1>
+      <p>Premium Live Television</p>
     </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="register">Register</button>
+    </div>
+    <div class="auth-error" id="authError"></div>
+    <form id="loginForm">
+      <div class="auth-field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email"></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password"></div>
+      <button type="submit" class="btn-primary" id="loginBtn">Sign In</button>
+    </form>
+    <form id="registerForm" style="display:none">
+      <div class="auth-field"><label>Name</label><input type="text" id="regName" placeholder="Your name" autocomplete="name"></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="regEmail" placeholder="you@example.com" required autocomplete="email"></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="regPass" placeholder="Min 6 characters" required autocomplete="new-password"></div>
+      <button type="submit" class="btn-primary" id="regBtn">Create Account</button>
+    </form>
+    <div class="auth-divider">or</div>
+    <button class="google-btn" id="googleBtn">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.2 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.5-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.2 6.1 29.4 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 36 26.8 37 24 37c-5.3 0-9.7-3.3-11.3-8H6.3C9.6 39.7 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.2-3.5 5.7-6.5 7.1l6.2 5.2C38.5 36.8 44 31.2 44 24c0-1.3-.1-2.5-.4-3.5z"/></svg>
+      Continue with Google
+    </button>
+    <span class="skip-auth" id="skipAuth">Continue without login</span>
   </div>
+</div>
 
-  <!-- MAIN APP -->
-  <div id="app">
+<!-- APP -->
+<div id="app" class="ready">
+  <!-- Sidebar (desktop) -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="logo-mark sm">C</div><span>Crimson<b>TV</b></span></div>
+    <nav class="side-nav" id="sideNav"></nav>
+    <div class="side-foot">
+      <a href="https://kafi.dev.bd" target="_blank" rel="noopener"><i class="fa-solid fa-code"></i> Developer</a>
+    </div>
+  </aside>
+
+  <div class="shell">
     <header class="topbar">
-      <div class="brand">
-        <div class="brand-logo">C</div>
-        Crimson<span>TV</span>
-      </div>
+      <div class="brand mobile-brand"><div class="logo-mark sm">C</div><span>Crimson<b>TV</b></span></div>
       <div class="search-wrap" id="searchWrap">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search channels..." autocomplete="off">
-        <button class="search-clear" id="searchClear" title="Clear"><i class="fa-solid fa-xmark"></i></button>
+        <input type="text" id="searchInput" placeholder="চ্যানেল খুঁজুন..." autocomplete="off">
+        <button class="search-clear" id="searchClear" aria-label="Clear"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="user-area" id="userArea"></div>
     </header>
 
-    <!-- Ad Slot 1: thin banner under topbar (728 desktop / native feel both) -->
-    <div class="ad-slot ad-top-strip" id="adTop"></div>
+    <main class="content" id="content">
 
-    <div class="main">
-      <section class="player-section">
-        <div class="v-wrap" id="vWrap">
-          <video id="video" playsinline webkit-playsinline></video>
-          <div class="player-overlay" id="playerOverlay"></div>
-          <button class="big-play" id="bigPlay" title="Play">
-            <i class="fa-solid fa-play"></i>
-          </button>
-          <div class="pc-bar" id="pcBar">
-            <div class="pc-top">
-              <div class="pc-info">
-                <div class="pc-name" id="pcName">Select a channel</div>
-                <div class="pc-meta" id="pcMeta"></div>
+      <!-- PAGE: LIVE / HOME -->
+      <section class="page active" id="page-home">
+        <div class="live-layout">
+          <div class="live-left">
+            <div class="section-title">Live TV</div>
+            <div class="v-wrap" id="vWrap">
+              <video id="video" playsinline webkit-playsinline></video>
+              <div class="live-badge" id="liveBadge"><i class="fa-solid fa-circle"></i> LIVE</div>
+              <div class="ch-badge" id="chBadge">Select a channel</div>
+              <div class="player-overlay" id="playerOverlay"></div>
+              <div class="toast" id="playerToast"></div>
+              <div class="seek-hint left" id="hintL"><i class="fa-solid fa-backward-step"></i></div>
+              <div class="seek-hint right" id="hintR"><i class="fa-solid fa-forward-step"></i></div>
+              <button class="big-play" id="bigPlay" aria-label="Play"><i class="fa-solid fa-play"></i></button>
+
+              <div class="pc-bar" id="pcBar">
+                <div class="pc-row">
+                  <button class="pc-btn" id="btnPrev" aria-label="Previous"><i class="fa-solid fa-backward-step"></i></button>
+                  <button class="pc-btn main" id="btnPlay" aria-label="Play/Pause"><i class="fa-solid fa-play"></i></button>
+                  <button class="pc-btn" id="btnNext" aria-label="Next"><i class="fa-solid fa-forward-step"></i></button>
+                  <div class="vol-wrap">
+                    <button class="pc-btn" id="btnMute" aria-label="Mute"><i class="fa-solid fa-volume-high"></i></button>
+                    <input type="range" id="volSlider" class="vol-slider" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+                  </div>
+                  <div class="pc-spacer"></div>
+                  <button class="pc-btn" id="btnShare" aria-label="Share"><i class="fa-solid fa-share-nodes"></i></button>
+                  <button class="pc-btn" id="btnPip" aria-label="Picture in picture"><i class="fa-solid fa-window-restore"></i></button>
+                  <button class="pc-btn" id="btnGear" aria-label="Quality / Settings"><i class="fa-solid fa-gear"></i></button>
+                  <button class="pc-btn" id="btnFs" aria-label="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+                </div>
               </div>
-              <div class="pc-actions">
-                <button class="pc-btn" id="btnShare" title="Share"><i class="fa-solid fa-share-nodes"></i></button>
-                <button class="pc-btn" id="btnPip" title="Picture in Picture"><i class="fa-solid fa-window-restore"></i></button>
+
+              <div class="gear-menu" id="gearMenu">
+                <div class="gm-title">Quality</div>
+                <div class="gm-list" id="qualityList"></div>
+                <div class="gm-title">Aspect</div>
+                <div class="gm-list" id="fitList">
+                  <button data-fit="contain" class="active">Fit</button>
+                  <button data-fit="cover">Fill</button>
+                  <button data-fit="fill">Stretch</button>
+                </div>
               </div>
             </div>
-            <div class="pc-bottom">
-              <div class="pc-btns left">
-                <button class="pc-btn" id="btnPrev" title="Previous Channel"><i class="fa-solid fa-backward-step"></i></button>
-                <button class="pc-btn main-btn" id="btnPlay" title="Play/Pause"><i class="fa-solid fa-play"></i></button>
-                <button class="pc-btn" id="btnNext" title="Next Channel"><i class="fa-solid fa-forward-step"></i></button>
-              </div>
-              <div class="vol-wrap">
-                <button class="pc-btn" id="btnMute" title="Mute"><i class="fa-solid fa-volume-high"></i></button>
-                <input type="range" id="volSlider" class="vol-slider" min="0" max="1" step="0.05" value="1" title="Volume">
-              </div>
-              <div class="pc-btns right">
-                <button class="pc-btn" id="btnFs" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
-              </div>
+            <div class="now-playing">
+              <div class="np-name" id="npName">কোনো চ্যানেল চলছে না</div>
+              <div class="np-meta" id="npMeta">নিচ থেকে একটি চ্যানেল বেছে নিন</div>
             </div>
+          </div>
+
+          <div class="live-right">
+            <div class="ad-slot" id="adTop"></div>
+            <div class="cat-tabs" id="catTabs"></div>
+            <div class="ch-grid" id="chGrid"></div>
+            <button class="btn-ghost block more-btn" id="moreBtn" style="display:none">Show more</button>
+            <div class="ad-slot" id="adNative"></div>
           </div>
         </div>
       </section>
 
-      <section class="channel-section">
-        <!-- Ad Slot 2: thin native between player area and categories (mobile mainly visible in stack) -->
-        <div class="ad-slot ad-mid-strip" id="adMid"></div>
+      <!-- PAGE: FAVORITES -->
+      <section class="page" id="page-fav">
+        <div class="section-title">Favorites</div>
+        <div class="ch-grid" id="favGrid"></div>
+      </section>
 
-        <div class="cat-tabs" id="catTabs"></div>
+      <!-- PAGE: HISTORY -->
+      <section class="page" id="page-history">
+        <div class="section-title row">History <button class="link-btn" id="clearHistory">Clear all</button></div>
+        <div class="ch-grid" id="historyGrid"></div>
+      </section>
 
-        <!-- Ad Slot 3: thin native under category tabs -->
-        <div class="ad-slot ad-mid-strip" id="adNative"></div>
+      <!-- PAGE: SEARCH -->
+      <section class="page" id="page-search">
+        <div class="section-title">Search</div>
+        <div class="search-wrap big">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="pageSearchInput" placeholder="চ্যানেলের নাম লিখুন..." autocomplete="off">
+        </div>
+        <div class="ch-grid" id="searchGrid"></div>
+      </section>
 
-        <div class="ch-scroll">
-          <div class="ch-grid" id="chGrid"></div>
+      <!-- PAGE: SETTINGS -->
+      <section class="page" id="page-settings">
+        <div class="section-title">Settings</div>
+        <div class="card-list">
+          <div class="set-row"><div><b>Autoplay last channel</b><small>অ্যাপ খুললে শেষ চ্যানেল চালু হবে</small></div><label class="switch"><input type="checkbox" id="setAutoplay"><span></span></label></div>
+          <div class="set-row"><div><b>Default quality</b><small>Auto সুপারিশ করা হয়</small></div>
+            <select id="setQuality"><option value="auto">Auto</option><option value="low">Low (data saver)</option><option value="high">High</option></select></div>
+          <div class="set-row"><div><b>Video fit</b><small>স্ক্রিনে ভিডিও কীভাবে বসবে</small></div>
+            <select id="setFit"><option value="contain">Fit</option><option value="cover">Fill</option><option value="fill">Stretch</option></select></div>
+          <div class="set-row"><div><b>Grid size</b><small>চ্যানেল কার্ডের সাইজ</small></div>
+            <select id="setGrid"><option value="s">Small</option><option value="m">Medium</option><option value="l">Large</option></select></div>
+          <div class="set-row"><div><b>Clear history</b><small>দেখা চ্যানেলের তালিকা মুছুন</small></div><button class="btn-ghost" id="setClearHist">Clear</button></div>
+          <div class="set-row"><div><b>Clear favorites</b><small>সব ফেভারিট মুছুন</small></div><button class="btn-ghost danger" id="setClearFav">Clear</button></div>
+          <div class="set-row"><div><b>Reload playlist</b><small>চ্যানেল লিস্ট নতুন করে লোড</small></div><button class="btn-ghost" id="setReload">Reload</button></div>
+        </div>
+        <div class="card-list links">
+          <button class="nav-row" data-go="support"><i class="fa-solid fa-headset"></i> Support <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="nav-row" data-go="faq"><i class="fa-solid fa-circle-question"></i> FAQ <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="nav-row" data-go="developer"><i class="fa-solid fa-code"></i> Developer Info <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        <div class="ad-slot" id="adSettings"></div>
+      </section>
+
+      <!-- PAGE: SUPPORT -->
+      <section class="page" id="page-support">
+        <div class="section-title">Support</div>
+        <div class="card-list pad">
+          <p class="muted">কোনো সমস্যা হলে বা মতামত থাকলে নিচের ফর্ম পূরণ করুন, অথবা সরাসরি ডেভেলপারের সাথে যোগাযোগ করুন।</p>
+          <div class="auth-field"><label>আপনার নাম</label><input id="supName" placeholder="Name"></div>
+          <div class="auth-field"><label>সমস্যার ধরন</label>
+            <select id="supType"><option>Channel not working</option><option>Buffering / Slow</option><option>Login problem</option><option>Ads problem</option><option>Feature request</option><option>Other</option></select></div>
+          <div class="auth-field"><label>বিস্তারিত</label><textarea id="supMsg" rows="4" placeholder="কী সমস্যা হচ্ছে লিখুন (চ্যানেলের নামসহ)"></textarea></div>
+          <button class="btn-primary" id="supSend"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+          <a class="btn-ghost block" href="https://kafi.dev.bd" target="_blank" rel="noopener"><i class="fa-solid fa-globe"></i> kafi.dev.bd</a>
         </div>
       </section>
-    </div>
 
-    <!-- Bottom Nav - Home / Favorites / Recent / Search -->
-    <nav class="bottom-nav" id="bottomNav">
-      <div class="bn-item active" data-page="home">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-      </div>
-      <div class="bn-item" data-page="fav">
-        <i class="fa-solid fa-heart"></i>
-        <span>Favorites</span>
-      </div>
-      <div class="bn-item" data-page="recent">
-        <i class="fa-solid fa-clock-rotate-left"></i>
-        <span>Recent</span>
-      </div>
-      <div class="bn-item" data-page="search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span>Search</span>
-      </div>
-    </nav>
+      <!-- PAGE: FAQ -->
+      <section class="page" id="page-faq">
+        <div class="section-title">FAQ</div>
+        <div class="faq" id="faqList"></div>
+      </section>
+
+      <!-- PAGE: DEVELOPER -->
+      <section class="page" id="page-developer">
+        <div class="section-title">Developer Info</div>
+        <div class="dev-card">
+          <div class="dev-avatar">K</div>
+          <h2>Abdullah Al Kafi</h2>
+          <p class="muted">Independent Web &amp; Android Developer</p>
+          <p class="muted"><i class="fa-solid fa-location-dot"></i> Chilmari, Kurigram, Bangladesh</p>
+          <div class="dev-links">
+            <a class="btn-primary" href="https://kafi.dev.bd" target="_blank" rel="noopener"><i class="fa-solid fa-globe"></i> kafi.dev.bd</a>
+            <a class="btn-ghost" href="https://github.com/kafi-1" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+          </div>
+        </div>
+        <div class="card-list pad">
+          <b>About CrimsonTV</b>
+          <p class="muted">CrimsonTV একটি ফ্রি IPTV ওয়েব অ্যাপ। চ্যানেলগুলো তৃতীয় পক্ষের পাবলিক প্লেলিস্ট থেকে লোড হয় — এই অ্যাপ কোনো ভিডিও হোস্ট করে না।</p>
+          <p class="muted">Version 2.0</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom nav (mobile) -->
+    <nav class="bottom-nav" id="bottomNav"></nav>
   </div>
+</div>
 
-  <div class="mobile-search-overlay" id="mobileSearchOverlay">
-    <div class="ms-header">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="mobileSearchInput" placeholder="Search channels..." autocomplete="off">
-      <button id="mobileSearchClose"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-  </div>
-
-  <script type="module" src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
