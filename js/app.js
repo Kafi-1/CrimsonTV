@@ -630,13 +630,10 @@ function loadAds(){
   if(adsLoaded) return;
   adsLoaded = true;
 
-  // Helper: load classic Adsterra banner into a container
   function loadBanner(containerId, key, width, height){
     const el = document.getElementById(containerId);
     if(!el) return;
-    // Clear previous
     el.innerHTML = '';
-    // Set global atOptions then inject scripts
     window.atOptions = {
       key: key,
       format: 'iframe',
@@ -652,8 +649,25 @@ function loadAds(){
     el.appendChild(s2);
   }
 
-  // 728x90 Desktop Leaderboard only
-  loadBanner('ad728', '7e9627f51376c6e4560f12209f0e099f', 728, 90);
+  function loadNative(containerId){
+    const el = document.getElementById(containerId);
+    if(!el) return;
+    el.innerHTML = '';
+    const s = document.createElement('script');
+    s.async = true;
+    s.setAttribute('data-cfasync', 'false');
+    s.src = 'https://pl31756762.profitableratecpmnetwork.com/0cd45fb864f5b70ccb28b69d91843ea3/invoke.js';
+    el.appendChild(s);
+    const div = document.createElement('div');
+    div.id = 'container-0cd45fb864f5b70ccb28b69d91843ea3';
+    el.appendChild(div);
+  }
+
+  // Top: 728x90 (works on desktop, scales on mobile)
+  loadBanner('adTop', '7e9627f51376c6e4560f12209f0e099f', 728, 90);
+
+  // Under categories: Native Banner (both mobile + desktop)
+  setTimeout(() => loadNative('adNative'), 500);
 }
 
 /* ───────────── INIT ───────────── */
